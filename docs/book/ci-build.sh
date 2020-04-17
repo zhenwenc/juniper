@@ -29,7 +29,7 @@ if [ $MDBOOK -h ]; then
     echo "mdbook found..."
 else
     echo "mdbook not found. Downloading..."
-    curl -L https://github.com/rust-lang-nursery/mdBook/releases/download/v0.2.0/mdbook-v0.2.0-x86_64-unknown-linux-gnu.tar.gz | tar xzf -
+    curl -L https://github.com/rust-lang-nursery/mdBook/releases/download/v0.3.7/mdbook-v0.3.7-x86_64-unknown-linux-gnu.tar.gz | tar xzf -
     mv ./mdbook /tmp/mdbook
     MDBOOK="/tmp/mdbook"
 fi
