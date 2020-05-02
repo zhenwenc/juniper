@@ -27,7 +27,12 @@ struct Obj {
     scalar = DefaultScalarValue,
     derive_fields
 )]
-impl Obj {}
+impl Obj {
+
+    fn custom_field(&self) -> &str {
+        "custom field"
+    }
+}
 
 struct Query;
 
@@ -74,6 +79,7 @@ async fn test_derived_object() {
             obj {
                 regularField
                 renamedField
+                customField
             }
         }"#;
 
@@ -93,6 +99,7 @@ async fn test_derived_object() {
                         vec![
                             ("regularField", Value::scalar(true)),
                             ("renamedField", Value::scalar(22)),
+                            ("customField", Value::scalar("custom field")),
                         ]
                         .into_iter()
                         .collect(),
