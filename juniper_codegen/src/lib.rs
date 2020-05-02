@@ -66,6 +66,20 @@ pub fn derive_object_internal(input: TokenStream) -> TokenStream {
     gen.into()
 }
 
+#[proc_macro_derive(GraphQLObjectInfo, attributes(graphql))]
+pub fn derive_object_info(input: TokenStream) -> TokenStream {
+    let ast = syn::parse::<syn::DeriveInput>(input).unwrap();
+    let gen = derive_object::build_derive_object_info(ast, false);
+    gen.into()
+}
+
+#[proc_macro_derive(GraphQLObjectInfoInternal, attributes(graphql))]
+pub fn derive_object_info_internal(input: TokenStream) -> TokenStream {
+    let ast = syn::parse::<syn::DeriveInput>(input).unwrap();
+    let gen = derive_object::build_derive_object_info(ast, true);
+    gen.into()
+}
+
 #[proc_macro_derive(GraphQLUnion, attributes(graphql))]
 pub fn derive_union(input: TokenStream) -> TokenStream {
     let ast = syn::parse::<syn::DeriveInput>(input).unwrap();
@@ -415,7 +429,7 @@ pub fn graphql_object_internal(args: TokenStream, input: TokenStream) -> TokenSt
 /// struct UserID(String);
 ///
 /// #[juniper::graphql_scalar(
-///     // You can rename the type for GraphQL by specifying the name here.    
+///     // You can rename the type for GraphQL by specifying the name here.
 ///     name = "MyName",
 ///     // You can also specify a description here.
 ///     // If present, doc comments will be ignored.

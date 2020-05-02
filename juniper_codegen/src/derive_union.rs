@@ -112,6 +112,7 @@ pub fn build_derive_union(ast: syn::DeriveInput, is_internal: bool) -> TokenStre
         fields,
         generics: ast.generics,
         interfaces: None,
+        include_struct_fields: false,
         include_type_generics: true,
         generic_scalar: true,
         no_async: attrs.no_async,

@@ -4,7 +4,7 @@ use syn::{self, Data, Fields};
 
 use crate::util;
 
-pub fn build_derive_object(ast: syn::DeriveInput, is_internal: bool) -> TokenStream {
+pub fn create_object_definition(ast: syn::DeriveInput) -> util::GraphQLTypeDefiniton {
     let struct_fields = match ast.data {
         Data::Struct(data) => match data.fields {
             Fields::Named(fields) => fields.named,
@@ -65,7 +65,7 @@ pub fn build_derive_object(ast: syn::DeriveInput, is_internal: bool) -> TokenStr
         }
     });
 
-    let definition = util::GraphQLTypeDefiniton {
+    util::GraphQLTypeDefiniton {
         name,
         _type: syn::parse_str(&ast.ident.to_string()).unwrap(),
         context: attrs.context,
@@ -74,11 +74,21 @@ pub fn build_derive_object(ast: syn::DeriveInput, is_internal: bool) -> TokenStr
         fields: fields.collect(),
         generics: ast.generics,
         interfaces: None,
+        include_struct_fields: false,
         include_type_generics: true,
         generic_scalar: true,
         no_async: attrs.no_async,
-    };
+    }
+}
 
+pub fn build_derive_object(ast: syn::DeriveInput, is_internal: bool) -> TokenStream {
+    let definition = create_object_definition(ast);
     let juniper_crate_name = if is_internal { "crate" } else { "juniper" };
     definition.into_tokens(juniper_crate_name)
+}
+
+pub fn build_derive_object_info(ast: syn::DeriveInput, is_internal: bool) -> TokenStream {
+    let definition = create_object_definition(ast);
+    let juniper_crate_name = if is_internal { "crate" } else { "juniper" };
+    definition.into_info_tokens(juniper_crate_name)
 }
