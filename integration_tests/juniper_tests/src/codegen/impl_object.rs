@@ -28,7 +28,6 @@ struct Obj {
     derive_fields
 )]
 impl Obj {
-
     fn custom_field(&self) -> &str {
         "custom field"
     }
