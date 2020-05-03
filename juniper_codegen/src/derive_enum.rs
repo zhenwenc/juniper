@@ -99,6 +99,7 @@ pub fn impl_enum(ast: syn::DeriveInput, is_internal: bool) -> TokenStream {
         // NOTICE: only unit variants allow -> no generics possible
         generics: syn::Generics::default(),
         interfaces: None,
+        include_struct_fields: false,
         include_type_generics: true,
         generic_scalar: true,
         no_async: attrs.no_async,

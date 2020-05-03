@@ -42,6 +42,7 @@ fn create(args: TokenStream, body: TokenStream) -> util::GraphQLTypeDefiniton {
         } else {
             None
         },
+        include_struct_fields: _impl.attrs.derive_fields.unwrap_or(false),
         include_type_generics: false,
         generic_scalar: false,
         no_async: _impl.attrs.no_async,
